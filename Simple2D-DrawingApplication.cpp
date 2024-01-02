@@ -1,38 +1,66 @@
-// Simple2D-DrawingApplication.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include <vector>
 #include <SFML/Graphics.hpp>
+#include "ShapeTool.h"
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "2D Drawing");
 
+    std::vector<sf::RectangleShape> rectangles;
+    bool isDrawing = false;
+
+    ShapeTool shapeTool;
+
     while (window.isOpen())
     {
         sf::Event event;
+
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
             {
                 window.close();
             }
-
-            window.clear(sf::Color::White);
-
-            // draw here
-            sf::CircleShape shape(50.f);
-            //shape.setFillColor(sf::Color(100, 204, 20));
-            shape.setOutlineThickness(2.f);
-            shape.setOutlineColor(sf::Color(0, 0, 0));
-            shape.setPosition(200, 200);
-            sf::Texture texture;
-            texture.loadFromFile("Textures/T_Brick512x512.jpg");
-            shape.setTexture(&texture);
-
-            window.draw(shape);
-            window.display();
+            else if (event.type == sf::Event::MouseButtonPressed &&
+                event.mouseButton.button == sf::Mouse::Left)
+            {
+                shapeTool.setStartPosition(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+                isDrawing = true;
+            }
+            else if (event.type == sf::Event::MouseButtonReleased &&
+                event.mouseButton.button == sf::Mouse::Left)
+            {
+                isDrawing = false;
+                sf::RectangleShape newRect = shapeTool.createRectangel();
+                rectangles.push_back(newRect);
+            }
         }
+
+        if (isDrawing)
+        {
+            shapeTool.setCurrentSize(window.mapPixelToCoords(sf::Mouse::getPosition(window)) - shapeTool.getStartPosition());
+        }
+
+        window.clear(sf::Color::White);
+
+        for (const auto& rect : rectangles)
+        {
+            window.draw(rect);
+        }
+
+        if (isDrawing)
+        {
+            sf::RectangleShape currentRect;
+            currentRect.setPosition(shapeTool.getStartPosition());
+            currentRect.setSize(shapeTool.getCurrentSize());
+            currentRect.setFillColor(sf::Color::Transparent);
+            currentRect.setOutlineThickness(5.f);
+            currentRect.setOutlineColor(sf::Color::Black);
+            window.draw(currentRect);
+        }
+
+        window.display();
     }
     return 0;
 }
