@@ -7,11 +7,11 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "2D Drawing");
 
-    std::vector<sf::RectangleShape> rectangles;
+    std::vector<std::unique_ptr<sf::Shape>> shapes;
     bool isDrawing = false;
 
     ShapeTool shapeTool;
-
+    shapeTool.SetSelectedShape(ShapeTool::CIRCLE);
     while (window.isOpen())
     {
         sf::Event event;
@@ -32,8 +32,8 @@ int main()
                 event.mouseButton.button == sf::Mouse::Left)
             {
                 isDrawing = false;
-                sf::RectangleShape newRect = shapeTool.createRectangel();
-                rectangles.push_back(newRect);
+                shapes.push_back(shapeTool.createShape(shapeTool.getSelectedShapeType(),
+                    sf::Color::Green, 0.f, sf::Color::Transparent));
             }
         }
 
@@ -44,22 +44,19 @@ int main()
 
         window.clear(sf::Color::White);
 
-        for (const auto& rect : rectangles)
+        for (const auto& shape : shapes)
         {
-            window.draw(rect);
+            window.draw(*shape);
         }
 
         if (isDrawing)
         {
-            sf::RectangleShape currentRect;
-            currentRect.setPosition(shapeTool.getStartPosition());
-            currentRect.setSize(shapeTool.getCurrentSize());
-            currentRect.setFillColor(sf::Color::Transparent);
-            currentRect.setOutlineThickness(5.f);
-            currentRect.setOutlineColor(sf::Color::Black);
-            window.draw(currentRect);
+            auto currentShape = shapeTool.createShape(shapeTool.getSelectedShapeType(), 
+                sf::Color::Transparent, 5.f, sf::Color::Black);
+            //currentShape->setPosition(shapeTool.getStartPosition());
+            window.draw(*currentShape);
         }
-
+        
         window.display();
     }
     return 0;
