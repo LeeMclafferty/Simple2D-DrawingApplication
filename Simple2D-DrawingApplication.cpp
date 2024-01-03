@@ -11,7 +11,7 @@ int main()
     bool isDrawing = false;
 
     ShapeTool shapeTool;
-    shapeTool.SetSelectedShape(ShapeTool::CIRCLE);
+    shapeTool.setSelectedShapeType(ShapeTool::CIRCLE);
     while (window.isOpen())
     {
         sf::Event event;
@@ -35,11 +35,38 @@ int main()
                 shapes.push_back(shapeTool.createShape(shapeTool.getSelectedShapeType(),
                     sf::Color::Green, 0.f, sf::Color::Transparent));
             }
+			else if (event.type == sf::Event::KeyPressed)
+			{
+				if (event.key.code == sf::Keyboard::Num1)
+				{
+                    shapeTool.setSelectedShapeType(ShapeTool::RECTANGLE);
+				}
+				else if (event.key.code == sf::Keyboard::Num2)
+				{
+					shapeTool.setSelectedShapeType(ShapeTool::CIRCLE);
+				}
+				else if (event.key.code == sf::Keyboard::Num3)
+				{
+					shapeTool.setSelectedShapeType(ShapeTool::TRIANGLE);
+				}
+				else if (event.key.code == sf::Keyboard::Num4)
+				{
+					shapeTool.setSelectedShapeType(ShapeTool::LINE);
+				}
+			}
         }
 
         if (isDrawing)
         {
-            shapeTool.setCurrentSize(window.mapPixelToCoords(sf::Mouse::getPosition(window)) - shapeTool.getStartPosition());
+            auto shapeType = shapeTool.getSelectedShapeType();
+            if (shapeType == ShapeTool::RECTANGLE)
+            {
+                shapeTool.setEndPosition(window.mapPixelToCoords(sf::Mouse::getPosition(window)) - shapeTool.getStartPosition());
+            }
+            else if (shapeType == ShapeTool::CIRCLE || shapeType == ShapeTool::TRIANGLE || shapeType == ShapeTool::LINE)
+            {
+                shapeTool.setEndPosition(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+            }
         }
 
         window.clear(sf::Color::White);

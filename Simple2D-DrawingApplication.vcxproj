@@ -139,10 +139,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Src\MathHelpers.cpp" />
     <ClCompile Include="Src\ShapeTool.cpp" />
     <ClCompile Include="Simple2D-DrawingApplication.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\MathHelpers.h" />
     <ClInclude Include="Src\ShapeTool.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

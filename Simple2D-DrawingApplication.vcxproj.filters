@@ -21,9 +21,15 @@
     <ClCompile Include="Src\ShapeTool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Src\MathHelpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\ShapeTool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MathHelpers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

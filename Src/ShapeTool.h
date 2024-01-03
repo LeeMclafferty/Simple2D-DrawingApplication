@@ -16,16 +16,16 @@ public:
 	std::unique_ptr<sf::Shape> createShape(Shape shape, sf::Color color, float outlineThickness, sf::Color outlineColor);
 
 	void setStartPosition(sf::Vector2f pos);
-	void setCurrentSize(sf::Vector2f pos);
-	void SetSelectedShape(Shape shape);
+	void setEndPosition(sf::Vector2f pos);
+	void setSelectedShapeType(Shape shape);
 
 	sf::Vector2f getStartPosition() { return startPosition; }
-	sf::Vector2f getCurrentSize() { return currentSize; }
+	sf::Vector2f getendPosition() { return endPosition; }
 	Shape getSelectedShapeType() { return selectedShapeType; }
 
 private:
 	sf::Vector2f startPosition;
-	sf::Vector2f currentSize;
+	sf::Vector2f endPosition;
 	Shape selectedShapeType;
 };
 
