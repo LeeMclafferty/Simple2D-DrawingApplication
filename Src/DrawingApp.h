@@ -1,23 +1,27 @@
 #pragma once
-#include "ShapeTool.h"
 #include "GuiManager.h"
 
 class DrawingApp
 {
 public:
-	DrawingApp(sf::RenderWindow& mainWindow, GuiManager& gManager);
+	DrawingApp(sf::RenderWindow& mainWindow, GuiManager& gManager, ShapeTool& tool);
 	void MainLoop();
 
 private:
 
 	sf::RenderWindow& window;
 	GuiManager& guiManager;
+	ShapeTool& shapeTool;
 
 	tgui::Gui& GetGui() { return guiManager.GetGui(); }
 
 	std::vector<std::unique_ptr<sf::Shape>> shapes;
 	bool isDrawing = false;
-	ShapeTool shapeTool;
+
+	const float thresholdSeconds;
+	sf::Clock clickTimer;
+
+	bool IsOverButton();
 
 };
 

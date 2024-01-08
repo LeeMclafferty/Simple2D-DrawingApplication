@@ -9,8 +9,9 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "2D Drawing");
     tgui::Gui gui{ window };
-	GuiManager guiManager(window, gui);
-	DrawingApp drawingApp(window, guiManager);
+    ShapeTool shapeTool;
+	GuiManager guiManager(window, gui, shapeTool);
+	DrawingApp drawingApp(window, guiManager, shapeTool);
 
 	drawingApp.MainLoop();
     
