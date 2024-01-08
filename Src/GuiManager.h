@@ -19,8 +19,9 @@ private:
 	ShapeTool& shapeTool;
 	int toolButtonSpacing;
 	
-	void CreateButton(std::string buttonName, sf::Vector2i buttonSize, std::string tPath, void (GuiManager::* OnClick)());
-	
+	void CreateTextureButton(std::string buttonName, std::string tPath, sf::Vector2i buttonSize, void (GuiManager::* OnClick)());
+	void CreateColorButton(tgui::Color color, std::string buttonName, sf::Vector2i buttonSize, void (GuiManager::* OnClick)());
+
 	void AddButtonsToGui();
 	std::unordered_map<std::string, tgui::BitmapButton::Ptr> buttons;
 
@@ -29,6 +30,8 @@ private:
 	void OnClickCircleTool();
 	void OnClickLineTool();
 	void OnClickColorPickerTool();
-	void Test();
+	void handleOnOkayPressed(tgui::ColorPicker::Ptr colorPicker);
+	sf::Color TguiColorToSfColor(const tgui::Color& tguiColor);
+	void ResetButtonImages();
 };
 

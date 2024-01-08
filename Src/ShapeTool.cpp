@@ -2,7 +2,8 @@
 #include "MathHelpers.h"
 
 ShapeTool::ShapeTool()
-	:startPosition(sf::Vector2f(0, 0)), endPosition(sf::Vector2f(0,0)), selectedShapeType(Shape::RECTANGLE)
+	:startPosition(sf::Vector2f(0, 0)), endPosition(sf::Vector2f(0,0)), selectedShapeType(Shape::RECTANGLE),
+	selectedColor(sf::Color::Black)
 {
 
 }
@@ -22,6 +23,14 @@ void ShapeTool::setSelectedShapeType(Shape shape)
 	selectedShapeType = shape;
 }
 
+
+void ShapeTool::setSelectedColor(sf::Color color)
+{
+	selectedColor.r = color.r;
+	selectedColor.g = color.g;
+	selectedColor.b = color.b;
+	selectedColor.a = color.a;
+}
 
 std::unique_ptr<sf::Shape> ShapeTool::createShape(Shape shape, sf::Color color, float outlineThickness = 0, sf::Color outlineColor = sf::Color::Black)
 {
@@ -66,7 +75,7 @@ std::unique_ptr<sf::Shape> ShapeTool::createShape(Shape shape, sf::Color color, 
 		float thickness = 2; 
 		newRect.setSize(sf::Vector2f(length, thickness));
 		newRect.setRotation(MathHelpers::getAngle(startPosition.x, startPosition.y, endPosition.x, endPosition.y));
-		newRect.setFillColor(sf::Color::Green);
+		newRect.setFillColor(GetSelectedColor());
 		newRect.setPosition(startPosition);
 		return std::make_unique<sf::RectangleShape>(newRect);
 	}

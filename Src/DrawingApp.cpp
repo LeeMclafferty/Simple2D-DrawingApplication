@@ -32,7 +32,7 @@ void DrawingApp::MainLoop()
 				if (!IsOverButton() && isDrawing)
 				{
 					shapes.push_back(shapeTool.createShape(shapeTool.getSelectedShapeType(),
-						sf::Color::Green, 0.f, sf::Color::Transparent));
+						shapeTool.GetSelectedColor(), 0.f, sf::Color::Transparent));
 				}
 				isDrawing = false;
 			}
@@ -58,6 +58,7 @@ void DrawingApp::MainLoop()
 			window.draw(*shape);
 		}
 
+		// Outline
 		if (isDrawing && !IsOverButton())
 		{
 			auto currentShape = shapeTool.createShape(shapeTool.getSelectedShapeType(),
