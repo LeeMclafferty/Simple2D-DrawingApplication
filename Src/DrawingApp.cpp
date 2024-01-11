@@ -1,5 +1,7 @@
 #include "DrawingApp.h"
 #include <SFML/Graphics.hpp>
+#include "DrawingDataSaver.h"
+#include "DrawingDataLoader.h"
 
 DrawingApp::DrawingApp(sf::RenderWindow& mainWindow, GuiManager& gManager, ShapeTool& tool)
 	: window(mainWindow), guiManager(gManager), shapeTool(tool), thresholdSeconds(.25f)
@@ -32,9 +34,19 @@ void DrawingApp::MainLoop()
 				if (!IsOverButton() && isDrawing)
 				{
 					shapes.push_back(shapeTool.createShape(shapeTool.getSelectedShapeType(),
-						shapeTool.GetSelectedColor(), 0.f, sf::Color::Transparent));
+					shapeTool.GetSelectedColor(), 0.f, sf::Color::Transparent));
 				}
 				isDrawing = false;
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			{
+				DrawingDataSaver saver("Test");
+				saver.Save(shapes);
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))
+			{
+				DrawingDataLoader loader("Test");
+				loader.Load(shapes);
 			}
 		}
 
@@ -55,7 +67,8 @@ void DrawingApp::MainLoop()
 
 		for (const auto& shape : shapes)
 		{
-			window.draw(*shape);
+			if(shape)
+				window.draw(*shape);
 		}
 
 		// Outline

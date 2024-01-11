@@ -75,8 +75,8 @@ TGUI_MODULE_EXPORT namespace tgui
             }
 
             Node* parent = nullptr;
-            std::vector<std::unique_ptr<Node>> children;
-            std::map<String, std::unique_ptr<ValueNode>> propertyValuePairs;
+            std::vector<std::shared_ptr<Node>> children;
+            std::map<String, std::shared_ptr<ValueNode>> propertyValuePairs;
             String name;
         };
 
@@ -102,7 +102,7 @@ TGUI_MODULE_EXPORT namespace tgui
         /// @return Root node of the tree of nodes
         ///
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        TGUI_NODISCARD static std::unique_ptr<Node> parse(std::stringstream& stream);
+        TGUI_NODISCARD static std::shared_ptr<Node> parse(std::stringstream& stream);
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -112,7 +112,7 @@ TGUI_MODULE_EXPORT namespace tgui
         /// @param stream   Stream to which the widget file will be added
         ///
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        static void emit(const std::unique_ptr<Node>& rootNode, std::stringstream& stream);
+        static void emit(const std::shared_ptr<Node>& rootNode, std::stringstream& stream);
     };
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

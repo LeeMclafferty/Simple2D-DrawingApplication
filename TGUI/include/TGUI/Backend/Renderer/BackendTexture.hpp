@@ -57,7 +57,7 @@ TGUI_MODULE_EXPORT namespace tgui
         /// @param pixels Moved pointer to array of size.x*size.y*4 bytes with RGBA pixels, or nullptr to create an empty texture
         /// @param smooth Should the smooth filter be enabled or not?
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        bool load(Vector2u size, std::unique_ptr<std::uint8_t[]> pixels, bool smooth);
+        bool load(Vector2u size, std::shared_ptr<std::uint8_t[]> pixels, bool smooth);
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -117,7 +117,7 @@ TGUI_MODULE_EXPORT namespace tgui
     protected:
 
         Vector2u m_imageSize;
-        std::unique_ptr<std::uint8_t[]> m_pixels;
+        std::shared_ptr<std::uint8_t[]> m_pixels;
         bool m_isSmooth = true;
     };
 }

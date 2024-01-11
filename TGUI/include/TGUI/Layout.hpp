@@ -143,7 +143,7 @@ TGUI_MODULE_EXPORT namespace tgui
         /// @internal
         /// @brief Constructs the layout with a mathematical operation between two other layouts
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        explicit Layout(Operation operation, std::unique_ptr<Layout> leftOperand, std::unique_ptr<Layout> rightOperand);
+        explicit Layout(Operation operation, std::shared_ptr<Layout> leftOperand, std::shared_ptr<Layout> rightOperand);
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -285,8 +285,8 @@ TGUI_MODULE_EXPORT namespace tgui
         float m_value = 0;
         Layout* m_parent = nullptr;
         Operation m_operation = Operation::Value;
-        std::unique_ptr<Layout> m_leftOperand = nullptr; // The left operand of the operation in case the operation is a math operation
-        std::unique_ptr<Layout> m_rightOperand = nullptr; // The left operand of the operation in case the operation is a math operation
+        std::shared_ptr<Layout> m_leftOperand = nullptr; // The left operand of the operation in case the operation is a math operation
+        std::shared_ptr<Layout> m_rightOperand = nullptr; // The left operand of the operation in case the operation is a math operation
         Widget* m_boundWidget = nullptr; // The widget on which this layout depends in case the operation is a binding
         String m_boundString; // String referring to a widget on which this layout depends in case the layout was created from a string and contains a binding operation
         std::function<void()> m_connectedWidgetCallback = nullptr; // Function to call when the value of the layout changes in case the layout and sublayouts are not all constants

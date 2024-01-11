@@ -108,15 +108,15 @@ TGUI_MODULE_EXPORT namespace tgui
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Turns texture and font filenames into paths relative to the theme file
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        void injectThemePath(const std::unique_ptr<DataIO::Node>& node, const String& path) const;
+        void injectThemePath(const std::shared_ptr<DataIO::Node>& node, const String& path) const;
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Resolves references to sections
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        void resolveReferences(std::map<String, std::reference_wrapper<const std::unique_ptr<DataIO::Node>>>& sections,
+        void resolveReferences(std::map<String, std::reference_wrapper<const std::shared_ptr<DataIO::Node>>>& sections,
                                const std::map<String, String>& globalProperties,
-                               const std::unique_ptr<DataIO::Node>& node) const;
+                               const std::shared_ptr<DataIO::Node>& node) const;
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -202,7 +202,7 @@ TGUI_MODULE_EXPORT namespace tgui
         ///
         /// @return Root node of the parsed file, obtained by calling DataIO::parse(fileContents)
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        TGUI_NODISCARD virtual std::unique_ptr<DataIO::Node> readFile(const String& filename) const;
+        TGUI_NODISCARD virtual std::shared_ptr<DataIO::Node> readFile(const String& filename) const;
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

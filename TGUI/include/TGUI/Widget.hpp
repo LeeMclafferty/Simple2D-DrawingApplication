@@ -1123,7 +1123,7 @@ TGUI_MODULE_EXPORT namespace tgui
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     protected:
 
-        using SavingRenderersMap = std::map<const Widget*, std::pair<std::unique_ptr<DataIO::Node>, String>>;
+        using SavingRenderersMap = std::map<const Widget*, std::pair<std::shared_ptr<DataIO::Node>, String>>;
         using LoadingRenderersMap = std::map<String, std::shared_ptr<RendererData>>;
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1136,12 +1136,12 @@ TGUI_MODULE_EXPORT namespace tgui
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// @brief Saves the widget as a tree node in order to save it to a file
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        TGUI_NODISCARD virtual std::unique_ptr<DataIO::Node> save(SavingRenderersMap& renderers) const;
+        TGUI_NODISCARD virtual std::shared_ptr<DataIO::Node> save(SavingRenderersMap& renderers) const;
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// @brief Loads the widget from a tree of nodes
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual void load(const std::unique_ptr<DataIO::Node>& node, const LoadingRenderersMap& renderers);
+        virtual void load(const std::shared_ptr<DataIO::Node>& node, const LoadingRenderersMap& renderers);
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// @brief This function is called when the mouse enters the widget
@@ -1261,7 +1261,7 @@ TGUI_MODULE_EXPORT namespace tgui
         aurora::CopiedPtr<WidgetRenderer> m_renderer = nullptr;
 
         // Show animations
-        std::vector<std::unique_ptr<priv::Animation>> m_showAnimations;
+        std::vector<std::shared_ptr<priv::Animation>> m_showAnimations;
 
         // Renderer properties that can be passed from containers to their children
         Font m_inheritedFont;

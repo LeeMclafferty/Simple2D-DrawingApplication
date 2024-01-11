@@ -32,7 +32,7 @@ void ShapeTool::setSelectedColor(sf::Color color)
 	selectedColor.a = color.a;
 }
 
-std::unique_ptr<sf::Shape> ShapeTool::createShape(Shape shape, sf::Color color, float outlineThickness = 0, sf::Color outlineColor = sf::Color::Black)
+std::shared_ptr<sf::Shape> ShapeTool::createShape(Shape shape, sf::Color color, float outlineThickness = 0, sf::Color outlineColor = sf::Color::Black)
 {
 	sf::RectangleShape newRect;
 	sf::CircleShape newShape;

@@ -269,7 +269,7 @@ TGUI_MODULE_EXPORT namespace tgui
         ///
         /// @return File contents if the file was successfully read, or a nullptr on failure or if platform isn't Android.
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        TGUI_NODISCARD virtual std::unique_ptr<std::uint8_t[]> readFileFromAndroidAssets(const String& filename, std::size_t& fileSize) const;
+        TGUI_NODISCARD virtual std::shared_ptr<std::uint8_t[]> readFileFromAndroidAssets(const String& filename, std::size_t& fileSize) const;
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -58,7 +58,7 @@ TGUI_MODULE_EXPORT namespace tgui
         ///
         /// @return True if the font was loaded successfully, false otherwise
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        bool loadFromMemory(std::unique_ptr<std::uint8_t[]> data, std::size_t sizeInBytes) override;
+        bool loadFromMemory(std::shared_ptr<std::uint8_t[]> data, std::size_t sizeInBytes) override;
         using BackendFont::loadFromMemory;
 
 
@@ -226,7 +226,7 @@ TGUI_MODULE_EXPORT namespace tgui
     protected:
 
         sf::Font m_font;
-        std::unique_ptr<std::uint8_t[]> m_fileContents;
+        std::shared_ptr<std::uint8_t[]> m_fileContents;
 
         std::unordered_set<std::uint64_t> m_loadedGlyphKeys;
 

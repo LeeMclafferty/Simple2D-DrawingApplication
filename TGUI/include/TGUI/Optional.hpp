@@ -155,7 +155,7 @@ TGUI_MODULE_EXPORT namespace tgui
         }
 
     private:
-        std::unique_ptr<T> m_ptr;
+        std::shared_ptr<T> m_ptr;
     };
 #endif
 }

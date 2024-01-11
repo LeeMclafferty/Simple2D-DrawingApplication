@@ -57,9 +57,9 @@ TGUI_MODULE_EXPORT namespace tgui
     const auto MakeUniqueForOverwrite = std::make_unique_for_overwrite<T>;
 #else
     template <typename T>
-    TGUI_NODISCARD std::unique_ptr<T> MakeUniqueForOverwrite(const std::size_t size)
+    TGUI_NODISCARD std::shared_ptr<T> MakeUniqueForOverwrite(const std::size_t size)
     {
-        return std::unique_ptr<T>(new typename std::remove_extent_t<T>[size]);
+        return std::shared_ptr<T>(new typename std::remove_extent_t<T>[size]);
     }
 #endif
 
@@ -149,7 +149,7 @@ TGUI_MODULE_EXPORT namespace tgui
     ///
     /// On android, the file will be read using the asset manager if a relative filename is passed.
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    TGUI_NODISCARD TGUI_API std::unique_ptr<std::uint8_t[]> readFileToMemory(const String& filename, std::size_t& fileSize);
+    TGUI_NODISCARD TGUI_API std::shared_ptr<std::uint8_t[]> readFileToMemory(const String& filename, std::size_t& fileSize);
 
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -543,13 +543,13 @@ TGUI_MODULE_EXPORT namespace tgui
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// @brief Saves the widget as a tree node in order to save it to a file
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        TGUI_NODISCARD std::unique_ptr<DataIO::Node> save(SavingRenderersMap& renderers) const override;
+        TGUI_NODISCARD std::shared_ptr<DataIO::Node> save(SavingRenderersMap& renderers) const override;
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         /// @brief Loads the widget from a tree of nodes
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        void load(const std::unique_ptr<DataIO::Node>& node, const LoadingRenderersMap& renderers) override;
+        void load(const std::shared_ptr<DataIO::Node>& node, const LoadingRenderersMap& renderers) override;
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -595,7 +595,7 @@ TGUI_MODULE_EXPORT namespace tgui
 
         /// @internal
         /// Helper function to load the menus when the menu bar is being loaded from a text file
-        void loadMenus(const std::unique_ptr<DataIO::Node>& node, std::vector<Menu>& menus);
+        void loadMenus(const std::shared_ptr<DataIO::Node>& node, std::vector<Menu>& menus);
 
         /// @internal
         /// Closes the open menu and its submenus

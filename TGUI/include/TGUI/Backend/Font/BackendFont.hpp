@@ -100,7 +100,7 @@ TGUI_MODULE_EXPORT namespace tgui
         ///
         /// @return True if the font was loaded successfully, false otherwise
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        virtual bool loadFromMemory(std::unique_ptr<std::uint8_t[]> data, std::size_t sizeInBytes) = 0;
+        virtual bool loadFromMemory(std::shared_ptr<std::uint8_t[]> data, std::size_t sizeInBytes) = 0;
 
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

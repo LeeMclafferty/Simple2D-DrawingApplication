@@ -15,7 +15,7 @@ private:
 
 	tgui::Gui& GetGui() { return guiManager.GetGui(); }
 
-	std::vector<std::unique_ptr<sf::Shape>> shapes;
+	std::vector<std::shared_ptr<sf::Shape>> shapes;
 	bool isDrawing = false;
 
 	const float thresholdSeconds;

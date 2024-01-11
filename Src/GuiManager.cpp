@@ -9,11 +9,11 @@ GuiManager::GuiManager(sf::RenderWindow& rWindow, tgui::Gui& mainGui, ShapeTool&
 	: window(rWindow), gui(mainGui), toolButtonSpacing(rWindow.getSize().x / 15), shapeTool(tool)
 {
 	int buttonSize = window.getSize().x / 20;
-	CreateTextureButton("RectangleTool", "Textures/RectangleTool.png", { buttonSize, buttonSize }, &GuiManager::OnClickRectangleTool);
-	CreateTextureButton("TriangleTool", "Textures/TriangleTool.png", { buttonSize, buttonSize },&GuiManager::OnClinckTriangleTool);
-	CreateTextureButton("CircleTool", "Textures/CircleTool.png", { buttonSize, buttonSize }, &GuiManager::OnClickCircleTool);
-	CreateTextureButton("LineTool", "Textures/LineTool.png", { buttonSize, buttonSize }, &GuiManager::OnClickLineTool);
-	CreateColorButton(tgui::Color(shapeTool.GetSelectedColor()), "ColorPickerTool", {buttonSize, buttonSize}, &GuiManager::OnClickColorPickerTool);
+// 	CreateTextureButton("RectangleTool", "/Textures/RectangleTool.png", { buttonSize, buttonSize }, &GuiManager::OnClickRectangleTool);
+// 	CreateTextureButton("TriangleTool", "/Textures/TriangleTool.png", { buttonSize, buttonSize },&GuiManager::OnClinckTriangleTool);
+// 	CreateTextureButton("CircleTool", "/Textures/CircleTool.png", { buttonSize, buttonSize }, &GuiManager::OnClickCircleTool);
+// 	CreateTextureButton("LineTool", "/Textures/LineTool.png", { buttonSize, buttonSize }, &GuiManager::OnClickLineTool);
+// 	CreateColorButton(tgui::Color(shapeTool.GetSelectedColor()), "ColorPickerTool", {buttonSize, buttonSize}, &GuiManager::OnClickColorPickerTool);
 	AddButtonsToGui();
 }
 
@@ -21,7 +21,7 @@ void GuiManager::CreateTextureButton(std::string buttonName, std::string tPath, 
 {
 	tgui::Texture texture(tPath);
 	tgui::BitmapButton::Ptr button = tgui::BitmapButton::create();
-	button->setSize(buttonSize.x, buttonSize.y);	
+	button->setSize(buttonSize.x, buttonSize.y);
 	button->getRenderer()->setTexture(texture);
 	button->getRenderer()->setBorderColor(tgui::Color::Transparent);
 	button->onClick([this, OnClick] { (this->*OnClick)(); });
@@ -33,7 +33,7 @@ void GuiManager::CreateColorButton(tgui::Color color, std::string buttonName, sf
 {
 	tgui::BitmapButton::Ptr button = tgui::BitmapButton::create();
 	button->setSize(buttonSize.x, buttonSize.y);
-	button->getRenderer()->setBorderColor(tgui::Color::Transparent);
+	button->getRenderer()->setBorderColor(tgui::Color::Black);
 	button->getRenderer()->setBackgroundColor(color);
 	button->onClick([this, OnClick] { (this->*OnClick)(); });
 	buttons[buttonName] = button;

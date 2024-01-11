@@ -13,7 +13,7 @@ public:
 	};
 
 	ShapeTool();
-	std::unique_ptr<sf::Shape> createShape(Shape shape, sf::Color color, float outlineThickness, sf::Color outlineColor);
+	std::shared_ptr<sf::Shape> createShape(Shape shape, sf::Color color, float outlineThickness, sf::Color outlineColor);
 
 	void setStartPosition(sf::Vector2f pos);
 	void setEndPosition(sf::Vector2f pos);
