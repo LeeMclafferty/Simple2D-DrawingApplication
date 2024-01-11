@@ -8,13 +8,7 @@
 GuiManager::GuiManager(sf::RenderWindow& rWindow, tgui::Gui& mainGui, ShapeTool& tool)
 	: window(rWindow), gui(mainGui), toolButtonSpacing(rWindow.getSize().x / 15), shapeTool(tool)
 {
-	int buttonSize = window.getSize().x / 20;
-	CreateTextureButton("RectangleTool", "Textures/RectangleTool.png", { buttonSize, buttonSize }, &GuiManager::OnClickRectangleTool);
-	CreateTextureButton("TriangleTool", "Textures/TriangleTool.png", { buttonSize, buttonSize },&GuiManager::OnClinckTriangleTool);
-	CreateTextureButton("CircleTool", "Textures/CircleTool.png", { buttonSize, buttonSize }, &GuiManager::OnClickCircleTool);
-	CreateTextureButton("LineTool", "Textures/LineTool.png", { buttonSize, buttonSize }, &GuiManager::OnClickLineTool);
-	CreateColorButton(tgui::Color(shapeTool.GetSelectedColor()), "ColorPickerTool", {buttonSize, buttonSize}, &GuiManager::OnClickColorPickerTool);
-	AddButtonsToGui();
+	CreateButtons();
 }
 
 void GuiManager::CreateTextureButton(std::string buttonName, std::string tPath, sf::Vector2i buttonSize, void (GuiManager::* OnClick)())
@@ -80,6 +74,13 @@ void GuiManager::OnClickLineTool()
 	shapeTool.setSelectedShapeType(ShapeTool::LINE);
 }
 
+void GuiManager::OnClickDrawTool()
+{
+	ResetButtonImages();
+	buttons["DrawTool"]->getRenderer()->setTexture("Textures/DrawTool-s.png");
+	shapeTool.setSelectedShapeType(ShapeTool::FREEFORM);
+}
+
 void GuiManager::OnClickColorPickerTool()
 {
 	ResetButtonImages();
@@ -114,6 +115,19 @@ void GuiManager::ResetButtonImages()
 	buttons["TriangleTool"]->getRenderer()->setTexture("Textures/TriangleTool.png");
 	buttons["CircleTool"]->getRenderer()->setTexture("Textures/CircleTool.png");
 	buttons["LineTool"]->getRenderer()->setTexture("Textures/LineTool.png");
+	buttons["DrawTool"]->getRenderer()->setTexture("Textures/DrawTool.png");
 	buttons["ColorPickerTool"]->getRenderer()->setBackgroundColor(shapeTool.GetSelectedColor());
+}
+
+void GuiManager::CreateButtons()
+{
+	int buttonSize = window.getSize().x / 20;
+	CreateTextureButton("RectangleTool", "Textures/RectangleTool.png", { buttonSize, buttonSize }, &GuiManager::OnClickRectangleTool);
+	CreateTextureButton("TriangleTool", "Textures/TriangleTool.png", { buttonSize, buttonSize }, &GuiManager::OnClinckTriangleTool);
+	CreateTextureButton("CircleTool", "Textures/CircleTool.png", { buttonSize, buttonSize }, &GuiManager::OnClickCircleTool);
+	CreateTextureButton("LineTool", "Textures/LineTool.png", { buttonSize, buttonSize }, &GuiManager::OnClickLineTool);
+	CreateTextureButton("DrawTool", "Textures/DrawTool.png", { buttonSize, buttonSize }, &GuiManager::OnClickDrawTool);
+	CreateColorButton(tgui::Color(shapeTool.GetSelectedColor()), "ColorPickerTool", { buttonSize, buttonSize }, &GuiManager::OnClickColorPickerTool);
+	AddButtonsToGui();
 }
 

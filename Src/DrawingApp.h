@@ -12,6 +12,7 @@ private:
 	sf::RenderWindow& window;
 	GuiManager& guiManager;
 	ShapeTool& shapeTool;
+	sf::RenderTexture renderTexture;
 
 	tgui::Gui& GetGui() { return guiManager.GetGui(); }
 

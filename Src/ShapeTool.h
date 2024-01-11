@@ -9,7 +9,8 @@ public:
 		RECTANGLE,
 		CIRCLE,
 		TRIANGLE,
-		LINE
+		LINE,
+		FREEFORM
 	};
 
 	ShapeTool();

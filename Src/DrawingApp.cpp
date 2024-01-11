@@ -5,6 +5,8 @@ DrawingApp::DrawingApp(sf::RenderWindow& mainWindow, GuiManager& gManager, Shape
 	: window(mainWindow), guiManager(gManager), shapeTool(tool), thresholdSeconds(.25f)
 {
 	shapeTool.setSelectedShapeType(ShapeTool::RECTANGLE);
+
+	renderTexture.create(window.getSize().x, window.getSize().y);
 }
 
 void DrawingApp::MainLoop()
@@ -23,13 +25,16 @@ void DrawingApp::MainLoop()
 				event.mouseButton.button == sf::Mouse::Left)
 			{
 				shapeTool.setStartPosition(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
-				if(!IsOverButton() && guiManager.canDraw)
+				if (!IsOverButton() && guiManager.canDraw)
+				{
 					isDrawing = true;
+				}
 			}
 			else if (event.type == sf::Event::MouseButtonReleased &&
 				event.mouseButton.button == sf::Mouse::Left)
 			{
-				if (!IsOverButton() && isDrawing)
+				sf::Vector2f pixelPosition = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+				if (!IsOverButton() && isDrawing && shapeTool.getSelectedShapeType() != ShapeTool::FREEFORM)
 				{
 					shapes.push_back(shapeTool.createShape(shapeTool.getSelectedShapeType(),
 						shapeTool.GetSelectedColor(), 0.f, sf::Color::Transparent));
@@ -61,12 +66,30 @@ void DrawingApp::MainLoop()
 		// Outline
 		if (isDrawing && !IsOverButton())
 		{
-			auto currentShape = shapeTool.createShape(shapeTool.getSelectedShapeType(),
-				sf::Color::Transparent, 5.f, sf::Color::Black);
-			currentShape->setPosition(shapeTool.getStartPosition());
-			window.draw(*currentShape);
+			if (shapeTool.getSelectedShapeType() == ShapeTool::FREEFORM)
+			{
+				sf::Vector2f pixelPosition = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+				sf::RectangleShape pixel(sf::Vector2f(5.f, 5.f));
+				pixel.setFillColor(shapeTool.GetSelectedColor());
+				pixel.setPosition(pixelPosition);
+
+				renderTexture.draw(pixel);
+
+				renderTexture.display();
+			}
+			else
+			{
+				auto currentShape = shapeTool.createShape(shapeTool.getSelectedShapeType(),
+					sf::Color::Transparent, 5.f, sf::Color::Black);
+				currentShape->setPosition(shapeTool.getStartPosition());
+				window.draw(*currentShape);
+			}
+
 		}
-		 
+
+		sf::Sprite renderSprite(renderTexture.getTexture());
+		window.draw(renderSprite);
+
 		GetGui().draw();
 		window.display();
 	}

@@ -29,9 +29,11 @@ private:
 	void OnClinckTriangleTool();
 	void OnClickCircleTool();
 	void OnClickLineTool();
+	void OnClickDrawTool();
 	void OnClickColorPickerTool();
 	void handleOnOkayPressed(tgui::ColorPicker::Ptr colorPicker);
 	sf::Color TguiColorToSfColor(const tgui::Color& tguiColor);
 	void ResetButtonImages();
+	void CreateButtons();
 };
 
