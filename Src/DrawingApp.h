@@ -23,6 +23,9 @@ private:
 	sf::Clock clickTimer;
 
 	bool IsOverButton();
+	void SetEndPosition();
+	void RealTimeDraw();
+	void HandleInput(sf::Event e);
 
 };
 

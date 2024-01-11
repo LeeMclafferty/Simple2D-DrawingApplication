@@ -16,45 +16,10 @@ void DrawingApp::MainLoop()
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
-			GetGui().handleEvent(event);
-			if (event.type == sf::Event::Closed)
-			{
-				window.close();
-			}
-			else if (event.type == sf::Event::MouseButtonPressed &&
-				event.mouseButton.button == sf::Mouse::Left)
-			{
-				shapeTool.setStartPosition(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
-				if (!IsOverButton() && guiManager.canDraw)
-				{
-					isDrawing = true;
-				}
-			}
-			else if (event.type == sf::Event::MouseButtonReleased &&
-				event.mouseButton.button == sf::Mouse::Left)
-			{
-				sf::Vector2f pixelPosition = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-				if (!IsOverButton() && isDrawing && shapeTool.getSelectedShapeType() != ShapeTool::FREEFORM)
-				{
-					shapes.push_back(shapeTool.createShape(shapeTool.getSelectedShapeType(),
-						shapeTool.GetSelectedColor(), 0.f, sf::Color::Transparent));
-				}
-				isDrawing = false;
-			}
+			HandleInput(event);
 		}
 
-		if (isDrawing && !IsOverButton())
-		{
-			auto shapeType = shapeTool.getSelectedShapeType();
-			if (shapeType == ShapeTool::RECTANGLE)
-			{
-				shapeTool.setEndPosition(window.mapPixelToCoords(sf::Mouse::getPosition(window)) - shapeTool.getStartPosition());
-			}
-			else if (shapeType == ShapeTool::CIRCLE || shapeType == ShapeTool::TRIANGLE || shapeType == ShapeTool::LINE)
-			{
-				shapeTool.setEndPosition(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
-			}
-		}
+		SetEndPosition();
 
 		window.clear(sf::Color::White);
 
@@ -63,29 +28,7 @@ void DrawingApp::MainLoop()
 			window.draw(*shape);
 		}
 
-		// Outline
-		if (isDrawing && !IsOverButton())
-		{
-			if (shapeTool.getSelectedShapeType() == ShapeTool::FREEFORM)
-			{
-				sf::Vector2f pixelPosition = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-				sf::RectangleShape pixel(sf::Vector2f(5.f, 5.f));
-				pixel.setFillColor(shapeTool.GetSelectedColor());
-				pixel.setPosition(pixelPosition);
-
-				renderTexture.draw(pixel);
-
-				renderTexture.display();
-			}
-			else
-			{
-				auto currentShape = shapeTool.createShape(shapeTool.getSelectedShapeType(),
-					sf::Color::Transparent, 5.f, sf::Color::Black);
-				currentShape->setPosition(shapeTool.getStartPosition());
-				window.draw(*currentShape);
-			}
-
-		}
+		RealTimeDraw();
 
 		sf::Sprite renderSprite(renderTexture.getTexture());
 		window.draw(renderSprite);
@@ -114,4 +57,73 @@ bool DrawingApp::IsOverButton()
 	}
 
 	return isCursorOverButton;
+}
+
+void DrawingApp::SetEndPosition()
+{
+	if (isDrawing && !IsOverButton())
+	{
+		auto shapeType = shapeTool.getSelectedShapeType();
+		if (shapeType == ShapeTool::RECTANGLE)
+		{
+			shapeTool.setEndPosition(window.mapPixelToCoords(sf::Mouse::getPosition(window)) - shapeTool.getStartPosition());
+		}
+		else if (shapeType == ShapeTool::CIRCLE || shapeType == ShapeTool::TRIANGLE || shapeType == ShapeTool::LINE)
+		{
+			shapeTool.setEndPosition(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+		}
+	}
+}
+
+void DrawingApp::RealTimeDraw()
+{
+	if (isDrawing && !IsOverButton())
+	{
+		if (shapeTool.getSelectedShapeType() == ShapeTool::FREEFORM)
+		{
+			sf::Vector2f pixelPosition = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+			sf::RectangleShape pixel(sf::Vector2f(2.f, 2.f));
+			pixel.setFillColor(shapeTool.GetSelectedColor());
+			pixel.setPosition(pixelPosition);
+
+			renderTexture.draw(pixel);
+
+			renderTexture.display();
+		}
+		else
+		{
+			auto currentShape = shapeTool.createShape(shapeTool.getSelectedShapeType(),
+				sf::Color::Transparent, 5.f, sf::Color::Black);
+			currentShape->setPosition(shapeTool.getStartPosition());
+			window.draw(*currentShape);
+		}
+
+	}
+}
+
+void DrawingApp::HandleInput(sf::Event e)
+{
+	GetGui().handleEvent(e);
+	if (e.type == sf::Event::Closed)
+	{
+		window.close();
+	}
+	else if (e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Left)
+	{
+		shapeTool.setStartPosition(window.mapPixelToCoords(sf::Mouse::getPosition(window)));
+		if (!IsOverButton() && guiManager.canDraw)
+		{
+			isDrawing = true;
+		}
+	}
+	else if (e.type == sf::Event::MouseButtonReleased && e.mouseButton.button == sf::Mouse::Left)
+	{
+		sf::Vector2f pixelPosition = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+		if (!IsOverButton() && isDrawing && shapeTool.getSelectedShapeType() != ShapeTool::FREEFORM)
+		{
+			shapes.push_back(shapeTool.createShape(shapeTool.getSelectedShapeType(),
+				shapeTool.GetSelectedColor(), 0.f, sf::Color::Transparent));
+		}
+		isDrawing = false;
+	}
 }
